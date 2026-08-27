@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kevin.dev - RPL Student &amp; Developer</title>
+<meta name="description" content="Portfolio Kevin — RPL student and developer working across web, mobile, UI design, and hardware."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#303034",
+                        "inverse-primary": "#005ac2",
+                        "on-tertiary-fixed": "#1c1b1d",
+                        "on-secondary-fixed": "#1b1b1f",
+                        "on-tertiary-fixed-variant": "#474649",
+                        "surface-container-highest": "#273647",
+                        "primary": "#adc6ff",
+                        "outline": "#8c909f",
+                        "secondary-fixed-dim": "#c8c5cb",
+                        "tertiary-container": "#929093",
+                        "error": "#ffb4ab",
+                        "surface-container-lowest": "#010f1f",
+                        "surface-variant": "#273647",
+                        "surface": "#051424",
+                        "surface-dim": "#051424",
+                        "background": "#051424",
+                        "surface-container-high": "#1c2b3c",
+                        "inverse-surface": "#d4e4fa",
+                        "outline-variant": "#424754",
+                        "on-surface": "#d4e4fa",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#2c3a4c",
+                        "secondary": "#c8c5cb",
+                        "tertiary-fixed-dim": "#c8c6c8",
+                        "on-secondary-fixed-variant": "#47464b",
+                        "surface-tint": "#adc6ff",
+                        "on-background": "#d4e4fa",
+                        "on-surface-variant": "#c2c6d6",
+                        "primary-fixed": "#d8e2ff",
+                        "secondary-container": "#47464b",
+                        "on-primary-fixed": "#001a42",
+                        "on-primary-container": "#00285d",
+                        "on-secondary-container": "#b6b4ba",
+                        "surface-container": "#122131",
+                        "primary-container": "#4d8eff",
+                        "surface-container-low": "#0d1c2d",
+                        "on-tertiary-container": "#2a292c",
+                        "on-error": "#690005",
+                        "on-tertiary": "#313032",
+                        "tertiary": "#c8c6c8",
+                        "tertiary-fixed": "#e5e1e4",
+                        "secondary-fixed": "#e4e1e7",
+                        "error-container": "#93000a",
+                        "primary-fixed-dim": "#adc6ff",
+                        "inverse-on-surface": "#233143",
+                        "on-primary": "#002e6a",
+                        "on-primary-fixed-variant": "#004395"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin_mobile": "20px",
+                        "base_unit": "8px",
+                        "margin_desktop": "40px",
+                        "gutter": "24px",
+                        "container_max_width": "1200px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "display-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "700" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-sm": ["24px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="bg-background text-on-background antialiased relative min-h-screen selection:bg-primary-container selection:text-on-primary-container font-body-md text-body-md mesh-gradient">
+
+<a href="#home" class="skip-link">Skip to content</a>
+
+<div class="fixed inset-0 grid-bg pointer-events-none z-[-1]"></div>
+<div class="fixed inset-0 pointer-events-none z-[-1] overflow-hidden" aria-hidden="true">
+  <div class="bg-blob bg-blob--one"></div>
+  <div class="bg-blob bg-blob--two"></div>
+</div>
+
+<!-- TopNavBar -->
+<nav id="navbar" class="fixed top-0 w-full z-50 border-b border-white/10 flex justify-between items-center h-20 px-margin_mobile md:px-margin_desktop max-w-container_max_width mx-auto left-0 right-0">
+  <a class="font-display-lg text-headline-sm font-extrabold text-primary" href="#home">Kevin.dev</a>
+
+  <div class="hidden md:flex gap-6 items-center" id="nav-links">
+    <a class="nav-link" data-section="home" href="#home">Home</a>
+    <a class="nav-link" data-section="about" href="#about">About</a>
+    <a class="nav-link" data-section="skills" href="#skills">Skills</a>
+    <a class="nav-link" data-section="projects" href="#projects">Projects</a>
+    <a class="nav-link" data-section="design" href="#design">Design Portfolio</a>
+    <a class="nav-link" data-section="website" href="#website">Website Portfolio</a>
+    <a class="nav-link" data-section="contact" href="#contact">Contact</a>
+    <a class="btn-solid ml-4" href="#contact">Resume</a>
+  </div>
+
+  <button id="menu-toggle" class="md:hidden text-primary relative z-[60]" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+    <span class="material-symbols-outlined" id="menu-icon">menu</span>
+  </button>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+  <div class="mobile-menu__panel">
+    <a class="mobile-menu__link" data-section="home" href="#home">Home</a>
+    <a class="mobile-menu__link" data-section="about" href="#about">About</a>
+    <a class="mobile-menu__link" data-section="skills" href="#skills">Skills</a>
+    <a class="mobile-menu__link" data-section="projects" href="#projects">Projects</a>
+    <a class="mobile-menu__link" data-section="design" href="#design">Design Portfolio</a>
+    <a class="mobile-menu__link" data-section="website" href="#website">Website Portfolio</a>
+    <a class="mobile-menu__link" data-section="contact" href="#contact">Contact</a>
+    <a class="btn-solid mt-4 text-center" href="#contact">Resume</a>
+  </div>
+</div>
+
+<main class="pt-32 pb-24 px-margin_mobile md:px-margin_desktop max-w-container_max_width mx-auto flex flex-col gap-[120px]">
+
+  <!-- Hero Section -->
+  <section class="relative flex flex-col-reverse md:flex-row items-center gap-12 min-h-[70vh]" id="home">
+    <div class="flex-1 flex flex-col items-start gap-6 z-10" id="hero-copy">
+      <span class="hero-badge" data-hero-item>RPL Student &amp; Developer</span>
+      <h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-background" data-hero-item>
+        Building Digital Experiences with Code &amp; Creativity.
+      </h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl" data-hero-item>
+        Student developer focused on web development, application development, UI design, and creative technology projects.
+      </p>
+      <div class="flex gap-4 mt-4" data-hero-item>
+        <a class="btn-solid" href="#projects">View My Projects</a>
+        <a class="btn-ghost" href="#contact">Contact Me</a>
+      </div>
+    </div>
+
+    <div class="flex-1 relative w-full aspect-square md:aspect-auto h-[400px] md:h-[600px]" id="hero-image-wrap">
+      <div class="absolute inset-0 bg-primary/20 rounded-2xl blur-3xl mix-blend-screen pointer-events-none"></div>
+      <img
+        alt="Portrait of Kevin, RPL student and developer"
+        class="w-full h-full object-cover object-top rounded-2xl border border-white/10 relative z-10 shadow-[0_0_40px_rgba(173,198,255,0.1)] hero-photo"
+        src="assets/images/profile.jpg"
+        onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuChtrRYGd3lnHHgDZY3CIwWFmiRoM7XQcY2EzccKtj9ghWYyAY5Ymru9z_VfoGq_J4IsxVz0IaCIAh_W7AKfa8AuLW7R_L3GfNiZoOrGFdfi0z11qdTeoylmGzHKF_XC2VT4lTjCsPajkbMS-zwRQjVoORouuHZW6uynTGPsML9i0PNoN0eZnrFl43v2GAQGpRZW3yAeicN4AXxhkiSeRZyj9nvac8PS6GNchxjkXZ61ezlaXgxF-EN';"
+      />
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="grid md:grid-cols-2 gap-12 items-start" id="about">
+    <div class="about-card" data-animate="slide-left">
+      <h2 class="font-headline-md text-headline-md text-primary mb-6" data-animate="fade-up">About Me</h2>
+      <p class="font-body-lg text-body-lg text-on-surface-variant mb-4">
+        I'm an RPL (Rekayasa Perangkat Lunak) student with a deep curiosity for how things work. My journey spans across Web, App, UI/Design, Database architecture, and even hardware tinkering with Arduino.
+      </p>
+      <div class="mt-8 flex gap-4 text-on-background font-label-caps text-label-caps tracking-widest opacity-70">
+        <span>Code</span> • <span>Design</span> • <span>Technology</span>
+      </div>
+    </div>
+
+    <!-- Lanyard ID Card -->
+    <div class="relative w-full h-[600px] flex justify-center overflow-visible" id="lanyard-stage" data-animate="fade-in">
+      <div class="lanyard-container" id="lanyard-wrapper">
+        <!-- Lanyard Strap -->
+        <div class="lanyard-strap" id="lanyard-strap" aria-hidden="true"></div>
+        <!-- Clip -->
+        <div class="lanyard-clip" aria-hidden="true">
+          <div class="lanyard-clip__notch"></div>
+          <div class="lanyard-clip__hole"></div>
+        </div>
+        <!-- ID Card -->
+        <div
+          class="lanyard-card id-card-glow"
+          id="lanyard-card"
+          tabindex="0"
+          role="img"
+          aria-label="Kevin's developer ID card. Student Developer, ID DEV-2026, system online. Drag to swing the card."
+        >
+          <div class="lanyard-card__topbar"></div>
+          <div class="flex justify-between items-start mb-6">
+            <div class="flex gap-1">
+              <div class="w-2 h-2 rounded-full bg-primary/50"></div>
+              <div class="w-2 h-2 rounded-full bg-primary/30"></div>
+              <div class="w-2 h-2 rounded-full bg-primary/10"></div>
+            </div>
+            <span class="font-label-caps text-[10px] text-outline-variant tracking-widest">&lt;/DEV_ID&gt;</span>
+          </div>
+          <div class="flex flex-col items-center gap-4 mb-6">
+            <div class="w-32 h-40 bg-surface border border-white/10 rounded-xl flex items-center justify-center relative overflow-hidden">
+              <img
+                alt="Kevin's ID photo"
+                class="w-full h-full object-cover object-top"
+                src="assets/images/profile2.jpg"
+                onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuChtrRYGd3lnHHgDZY3CIwWFmiRoM7XQcY2EzccKtj9ghWYyAY5Ymru9z_VfoGq_J4IsxVz0IaCIAh_W7AKfa8AuLW7R_L3GfNiZoOrGFdfi0z11qdTeoylmGzHKF_XC2VT4lTjCsPajkbMS-zwRQjVoORouuHZW6uynTGPsML9i0PNoN0eZnrFl43v2GAQGpRZW3yAeicN4AXxhkiSeRZyj9nvac8PS6GNchxjkXZ61ezlaXgxF-EN';"
+              />
+            </div>
+            <div class="text-center">
+              <h3 class="font-headline-md text-on-background text-2xl font-bold tracking-tight">Kevin</h3>
+              <p class="font-label-caps text-primary tracking-widest mt-1">Student Developer</p>
+            </div>
+          </div>
+          <div class="bg-surface p-3 rounded-lg border border-white/5 flex items-center justify-between mb-4">
+            <div class="font-mono text-[10px] text-outline flex flex-col gap-1">
+              <span>ID: DEV-2026</span>
+              <span>SYS: ONLINE</span>
+            </div>
+            <div class="w-10 h-10 bg-white/5 rounded border border-white/10 flex items-center justify-center">
+              <span class="material-symbols-outlined text-outline-variant text-xl">qr_code_2</span>
+            </div>
+          </div>
+          <div class="w-full h-8 overflow-hidden opacity-30">
+            <div class="font-mono text-[8px] text-primary whitespace-nowrap leading-tight">
+              function init() { return 'ready'; }<br/>
+              sys.boot(); /* kinetic */<br/>
+              while(true) { code(); sleep(); }
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="lanyard-hint" aria-hidden="true">Drag the card ↔</p>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section class="flex flex-col gap-8" id="skills">
+    <h2 class="font-headline-md text-headline-md text-center" data-animate="fade-up">Technical Arsenal</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="skill-card" data-animate="fade-up" data-delay="0">
+        <h3 class="font-headline-sm text-headline-sm text-primary mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined">code</span> Programming &amp; Dev
+        </h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="skill-badge">HTML</span>
+          <span class="skill-badge">CSS</span>
+          <span class="skill-badge">JavaScript</span>
+          <span class="skill-badge">Java</span>
+          <span class="skill-badge">Laravel</span>
+          <span class="skill-badge">Flutter</span>
+          <span class="skill-badge">MySQL</span>
+          <span class="skill-badge">C++</span>
+          <span class="skill-badge">Arduino</span>
+        </div>
+      </div>
+
+      <div class="skill-card" data-animate="fade-up" data-delay="120">
+        <h3 class="font-headline-sm text-headline-sm text-primary mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined">build</span> Tools
+        </h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="skill-badge">VS Code</span>
+          <span class="skill-badge">NetBeans</span>
+          <span class="skill-badge">XAMPP</span>
+          <span class="skill-badge">phpMyAdmin</span>
+          <span class="skill-badge">Dev-C++</span>
+          <span class="skill-badge">Sublime Text</span>
+        </div>
+      </div>
+
+      <div class="skill-card" data-animate="fade-up" data-delay="240">
+        <h3 class="font-headline-sm text-headline-sm text-primary mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined">palette</span> Design &amp; Productivity
+        </h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="skill-badge">Canva</span>
+          <span class="skill-badge">MS Word</span>
+          <span class="skill-badge">MS Excel</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Projects -->
+  <section class="flex flex-col gap-8" id="projects">
+    <h2 class="font-headline-md text-headline-md text-center" data-animate="fade-up">Featured Projects</h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <article class="project-card" data-animate="fade-up-scale" data-delay="0">
+        <div class="project-card__media">
+          <img alt="Website Perpustakaan Sekolah screenshot" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlUFK9dr-rqzH6ItAuFsKjpwkikBmTQ6DXJWU4eNv27tnom6pIWkBx-ChtyCFWQXTdRXNvYFEozIH8Ib7HzTaULb2wDoiaBq8mKS0pt0qclcu0BAhwcZuqT9xchz3Teoy-HViWvFyc6QEHVifL0VK9hPiVvKFrXEHSoED3L1EUYHG7VMygcZgHDNXNXapCxchIxeabovvehfbUlJwthKcSuf868AFY1YxFjFB__58lVYQDaVhDiyia"/>
+        </div>
+        <div class="p-6">
+          <h3 class="font-headline-sm text-headline-sm text-on-background mb-2">Website Perpustakaan Sekolah</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-4 line-clamp-2">A school library management system.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag-badge">PHP</span>
+            <span class="tag-badge">HTML/CSS/JS</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card" data-animate="fade-up-scale" data-delay="60">
+        <div class="project-card__media">
+          <img alt="Random Word Generator app screenshot" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlUFK9dr-rqzH6ItAuFsKjpwkikBmTQ6DXJWU4eNv27tnom6pIWkBx-ChtyCFWQXTdRXNvYFEozIH8Ib7HzTaULb2wDoiaBq8mKS0pt0qclcu0BAhwcZuqT9xchz3Teoy-HViWvFyc6QEHVifL0VK9hPiVvKFrXEHSoED3L1EUYHG7VMygcZgHDNXNXapCxchIxeabovvehfbUlJwthKcSuf868AFY1YxFjFB__58lVYQDaVhDiyia"/>
+        </div>
+        <div class="p-6">
+          <h3 class="font-headline-sm text-headline-sm text-on-background mb-2">Random Word Generator</h3>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="tag-badge">Flutter</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card" data-animate="fade-up-scale" data-delay="120">
+        <div class="project-card__media">
+          <img alt="Aplikasi CRUD screenshot" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlUFK9dr-rqzH6ItAuFsKjpwkikBmTQ6DXJWU4eNv27tnom6pIWkBx-ChtyCFWQXTdRXNvYFEozIH8Ib7HzTaULb2wDoiaBq8mKS0pt0qclcu0BAhwcZuqT9xchz3Teoy-HViWvFyc6QEHVifL0VK9hPiVvKFrXEHSoED3L1EUYHG7VMygcZgHDNXNXapCxchIxeabovvehfbUlJwthKcSuf868AFY1YxFjFB__58lVYQDaVhDiyia"/>
+        </div>
+        <div class="p-6">
+          <h3 class="font-headline-sm text-headline-sm text-on-background mb-2">Aplikasi CRUD</h3>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="tag-badge">Flutter</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card" data-animate="fade-up-scale" data-delay="180">
+        <div class="project-card__media">
+          <img alt="Aplikasi Pendataan Siswa screenshot" loading="lazy" src="https://lh3.googleusercontent.com/aida/AEtjO1UXqci8iqaX84EUCA6gSNrgPKbqiwKoqFkXEiSZRIC-bTQly_uAx3eIJo9bRzvLyZu8SLb3dc4wy2BmIEEnjE6WKl3lX0174ps85ROMZ7tnNMg2ON9cVNaEt_jDPgV3o55pyaUPrzYqW-3BplGM-eK_oN6U2yX-UKd9-JSIraP5O_0F8Sjxrw_XLpvVuWlsxHRjrW5QHo6lz5D2d-dT7Gwtv8KFsv5qHx_32MOqP9bvnADCbEb_gDgZZg"/>
+        </div>
+        <div class="p-6">
+          <h3 class="font-headline-sm text-headline-sm text-on-background mb-2">Aplikasi Pendataan Siswa</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-4 line-clamp-2">Desktop application for managing student data with a secure MySQL database backend.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag-badge">Java</span>
+            <span class="tag-badge">MySQL</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card" data-animate="fade-up-scale" data-delay="240">
+        <div class="project-card__media">
+          <img alt="Landing Page Aplikasi Menabung screenshot" loading="lazy" src="https://lh3.googleusercontent.com/aida/AEtjO1UXqci8iqaX84EUCA6gSNrgPKbqiwKoqFkXEiSZRIC-bTQly_uAx3eIJo9bRzvLyZu8SLb3dc4wy2BmIEEnjE6WKl3lX0174ps85ROMZ7tnNMg2ON9cVNaEt_jDPgV3o55pyaUPrzYqW-3BplGM-eK_oN6U2yX-UKd9-JSIraP5O_0F8Sjxrw_XLpvVuWlsxHRjrW5QHo6lz5D2d-dT7Gwtv8KFsv5qHx_32MOqP9bvnADCbEb_gDgZZg"/>
+        </div>
+        <div class="p-6">
+          <h3 class="font-headline-sm text-headline-sm text-on-background mb-2">Landing Page Aplikasi Menabung</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-4 line-clamp-2">Clean and modern landing page concept for a savings and financial management application.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag-badge">HTML/CSS/JS</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card" data-animate="fade-up-scale" data-delay="300">
+        <div class="project-card__media">
+          <img alt="Website Pendataan Tokoh screenshot" loading="lazy" src="https://lh3.googleusercontent.com/aida/AEtjO1UXqci8iqaX84EUCA6gSNrgPKbqiwKoqFkXEiSZRIC-bTQly_uAx3eIJo9bRzvLyZu8SLb3dc4wy2BmIEEnjE6WKl3lX0174ps85ROMZ7tnNMg2ON9cVNaEt_jDPgV3o55pyaUPrzYqW-3BplGM-eK_oN6U2yX-UKd9-JSIraP5O_0F8Sjxrw_XLpvVuWlsxHRjrW5QHo6lz5D2d-dT7Gwtv8KFsv5qHx_32MOqP9bvnADCbEb_gDgZZg"/>
+        </div>
+        <div class="p-6">
+          <h3 class="font-headline-sm text-headline-sm text-on-background mb-2">Website Pendataan Tokoh</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-4 line-clamp-2">A web-based CRUD application built with Laravel to manage and display character/figure data.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag-badge">Laravel</span>
+            <span class="tag-badge">PHP</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card" data-animate="fade-up-scale" data-delay="0">
+        <div class="project-card__media">
+          <img alt="Tong Sampah Otomatis hardware project photo" loading="lazy" src="https://lh3.googleusercontent.com/aida/AEtjO1UXqci8iqaX84EUCA6gSNrgPKbqiwKoqFkXEiSZRIC-bTQly_uAx3eIJo9bRzvLyZu8SLb3dc4wy2BmIEEnjE6WKl3lX0174ps85ROMZ7tnNMg2ON9cVNaEt_jDPgV3o55pyaUPrzYqW-3BplGM-eK_oN6U2yX-UKd9-JSIraP5O_0F8Sjxrw_XLpvVuWlsxHRjrW5QHo6lz5D2d-dT7Gwtv8KFsv5qHx_32MOqP9bvnADCbEb_gDgZZg"/>
+        </div>
+        <div class="p-6">
+          <h3 class="font-headline-sm text-headline-sm text-on-background mb-2">Tong Sampah Otomatis</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-4 line-clamp-2">Smart hardware project featuring an automated lid mechanism using ultrasonic sensors.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag-badge">Arduino</span>
+            <span class="tag-badge">C++</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card" data-animate="fade-up-scale" data-delay="60">
+        <div class="project-card__media">
+          <img alt="Radar Ultrasonik project photo" loading="lazy" src="https://lh3.googleusercontent.com/aida/AEtjO1UXqci8iqaX84EUCA6gSNrgPKbqiwKoqFkXEiSZRIC-bTQly_uAx3eIJo9bRzvLyZu8SLb3dc4wy2BmIEEnjE6WKl3lX0174ps85ROMZ7tnNMg2ON9cVNaEt_jDPgV3o55pyaUPrzYqW-3BplGM-eK_oN6U2yX-UKd9-JSIraP5O_0F8Sjxrw_XLpvVuWlsxHRjrW5QHo6lz5D2d-dT7Gwtv8KFsv5qHx_32MOqP9bvnADCbEb_gDgZZg"/>
+        </div>
+        <div class="p-6">
+          <h3 class="font-headline-sm text-headline-sm text-on-background mb-2">Radar Ultrasonik</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-4 line-clamp-2">An Arduino-based radar system that visualizes object detection within a specific range.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag-badge">Arduino</span>
+            <span class="tag-badge">Processing</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Design Portfolio -->
+  <section class="flex flex-col gap-8" id="design">
+    <h2 class="font-headline-md text-headline-md text-center" data-animate="fade-up">Design Portfolio</h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="design-card" data-animate="fade-up-scale">
+        <img alt="Portofolio Pelajar RPL design cover" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlUFK9dr-rqzH6ItAuFsKjpwkikBmTQ6DXJWU4eNv27tnom6pIWkBx-ChtyCFWQXTdRXNvYFEozIH8Ib7HzTaULb2wDoiaBq8mKS0pt0qclcu0BAhwcZuqT9xchz3Teoy-HViWvFyc6QEHVifL0VK9hPiVvKFrXEHSoED3L1EUYHG7VMygcZgHDNXNXapCxchIxeabovvehfbUlJwthKcSuf868AFY1YxFjFB__58lVYQDaVhDiyia"/>
+        <div class="design-card__overlay">
+          <h3 class="font-headline-sm text-headline-sm">Portofolio Pelajar RPL</h3>
+          <p class="font-label-caps text-label-caps text-primary">About Me</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Website Portfolio -->
+  <section class="flex flex-col gap-8 items-center text-center" id="website">
+    <h2 class="font-headline-md text-headline-md" data-animate="fade-up">Website Portfolio</h2>
+    <div class="empty-state" data-animate="fade-in">
+      <span class="material-symbols-outlined text-6xl text-outline-variant mb-4">web</span>
+      <p class="font-body-lg text-body-lg text-on-surface-variant">More websites are coming soon.</p>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="max-w-2xl mx-auto w-full flex flex-col gap-8" id="contact">
+    <div class="text-center" data-animate="fade-up">
+      <h2 class="font-headline-md text-headline-md text-primary mb-2">Let's Build Something Together.</h2>
+      <p class="text-on-surface-variant">Reach out for collaborations, inquiries, or just to say hi.</p>
+    </div>
+    <form class="contact-form" data-animate="slide-up" novalidate>
+      <div class="contact-field" data-animate="fade-up" data-delay="0">
+        <label class="block font-label-caps text-label-caps mb-2 text-on-surface-variant" for="name">Name</label>
+        <input class="form-input" id="name" name="name" placeholder="John Doe" type="text" required/>
+      </div>
+      <div class="contact-field" data-animate="fade-up" data-delay="100">
+        <label class="block font-label-caps text-label-caps mb-2 text-on-surface-variant" for="email">Email</label>
+        <input class="form-input" id="email" name="email" placeholder="your@email.com" type="email" required/>
+      </div>
+      <div class="contact-field" data-animate="fade-up" data-delay="200">
+        <label class="block font-label-caps text-label-caps mb-2 text-on-surface-variant" for="message">Message</label>
+        <textarea class="form-input" id="message" name="message" placeholder="Your message..." rows="4" required></textarea>
+      </div>
+      <button class="btn-solid w-full mt-2" type="submit">Send Message</button>
+      <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="bg-surface-container-lowest w-full py-12 border-t border-white/10">
+  <div class="flex flex-col md:flex-row justify-between items-center px-margin_desktop max-w-container_max_width mx-auto gap-gutter">
+    <div class="text-headline-sm font-display-lg text-primary">Kevin.dev</div>
+    <div class="flex gap-4">
+      <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#home">Home</a>
+      <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#about">About</a>
+      <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#projects">Projects</a>
+    </div>
+    <div class="font-label-caps text-label-caps text-on-surface-variant">
+      © 2026 Kevin. Built with code &amp; creativity.
+    </div>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
