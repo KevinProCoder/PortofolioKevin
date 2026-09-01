@@ -17,6 +17,17 @@ body {
   overflow-x: hidden;
 }
 
+/* ---------- Particle canvas ---------- */
+
+#particle-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
 /* ---------- Backgrounds ---------- */
 
 .mesh-gradient {
@@ -87,17 +98,26 @@ body {
 
 /* ---------- Navbar ---------- */
 
+/* Entrance: navbar slides down + fades in on page load */
 #navbar {
   background: rgba(5, 20, 36, 0.35);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Start hidden — JS adds .navbar-loaded to trigger entrance */
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+#navbar.navbar-loaded {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 #navbar.scrolled {
-  background: rgba(5, 20, 36, 0.82);
+  background: rgba(5, 20, 36, 0.88);
   border-color: rgba(255, 255, 255, 0.14);
-  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 32px -12px rgba(0, 0, 0, 0.6), 0 0 0 0.5px rgba(173, 198, 255, 0.08);
 }
 
 .nav-link {
@@ -105,7 +125,7 @@ body {
   color: #c2c6d6;
   padding: 4px 2px;
   font-size: 16px;
-  transition: color 0.2s ease;
+  transition: color 0.22s ease, transform 0.22s ease;
 }
 
 .nav-link::after {
@@ -115,12 +135,14 @@ body {
   bottom: -2px;
   width: 0%;
   height: 2px;
-  background: #adc6ff;
-  transition: width 0.25s ease;
+  background: linear-gradient(90deg, #adc6ff, #4d8eff);
+  border-radius: 9999px;
+  transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-link:hover {
   color: #adc6ff;
+  transform: translateY(-2px);
 }
 
 .nav-link:hover::after {
@@ -136,6 +158,8 @@ body {
   width: 100%;
 }
 
+/* ---------- Buttons ---------- */
+
 .btn-solid {
   background: #3b82f6;
   color: #fff;
@@ -146,17 +170,19 @@ body {
   font-weight: 600;
   display: inline-block;
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
+  will-change: transform;
 }
 
 .btn-solid:hover {
   background: #2563eb;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px -8px rgba(59, 130, 246, 0.55);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 28px -8px rgba(59, 130, 246, 0.6), 0 0 20px -4px rgba(77, 142, 255, 0.3);
 }
 
 .btn-solid:active {
-  transform: translateY(0);
+  transform: translateY(0) scale(0.97);
+  box-shadow: none;
 }
 
 .btn-ghost {
@@ -169,13 +195,18 @@ body {
   letter-spacing: 0.1em;
   font-weight: 600;
   backdrop-filter: blur(8px);
-  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
 }
 
 .btn-ghost:hover {
   background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
+  border-color: rgba(173, 198, 255, 0.3);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-ghost:active {
+  transform: translateY(0) scale(0.97);
 }
 
 /* Mobile menu */
@@ -217,6 +248,12 @@ body {
   font-size: 22px;
   font-weight: 600;
   color: #d4e4fa;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.mobile-menu__link:hover {
+  color: #adc6ff;
+  transform: translateX(4px);
 }
 
 .mobile-menu__link.active {
@@ -239,17 +276,17 @@ body {
 
 #hero-copy [data-hero-item] {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(28px);
 }
 
 #hero-copy.ready [data-hero-item] {
-  animation: heroItemIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: heroItemIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-#hero-copy.ready [data-hero-item]:nth-child(1) { animation-delay: 0.05s; }
-#hero-copy.ready [data-hero-item]:nth-child(2) { animation-delay: 0.2s; }
-#hero-copy.ready [data-hero-item]:nth-child(3) { animation-delay: 0.4s; }
-#hero-copy.ready [data-hero-item]:nth-child(4) { animation-delay: 0.55s; }
+#hero-copy.ready [data-hero-item]:nth-child(1) { animation-delay: 0.7s; }
+#hero-copy.ready [data-hero-item]:nth-child(2) { animation-delay: 0.85s; }
+#hero-copy.ready [data-hero-item]:nth-child(3) { animation-delay: 1.0s; }
+#hero-copy.ready [data-hero-item]:nth-child(4) { animation-delay: 1.15s; }
 
 @keyframes heroItemIn {
   to { opacity: 1; transform: translateY(0); }
@@ -257,25 +294,30 @@ body {
 
 #hero-image-wrap {
   opacity: 0;
-  transform: scale(0.92);
+  transform: scale(0.92) translateY(16px);
 }
 
 #hero-image-wrap.ready {
   animation: heroImageIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  animation-delay: 0.15s;
+  animation-delay: 0.75s;
 }
 
 @keyframes heroImageIn {
-  to { opacity: 1; transform: scale(1); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .hero-photo {
   animation: heroFloat 7s ease-in-out infinite;
   animation-play-state: paused;
+  transition: box-shadow 0.4s ease;
 }
 
 #hero-image-wrap.ready .hero-photo {
   animation-play-state: running;
+}
+
+#hero-image-wrap:hover .hero-photo {
+  box-shadow: 0 0 60px rgba(173, 198, 255, 0.2) !important;
 }
 
 @keyframes heroFloat {
@@ -312,6 +354,12 @@ body {
   backdrop-filter: blur(8px);
   position: sticky;
   top: 128px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-card:hover {
+  border-color: rgba(173, 198, 255, 0.2);
+  box-shadow: 0 8px 32px -12px rgba(77, 142, 255, 0.2);
 }
 
 /* ---------- Lanyard ---------- */
@@ -353,9 +401,6 @@ body {
   animation: strapSway 5.5s ease-in-out infinite;
 }
 
-/* Very subtle idle sway on the strap only — kept separate from the
-   wrapper element so it never fights with the JS-driven drag transform
-   on #lanyard-wrapper. */
 @keyframes strapSway {
   0%, 100% { transform: rotate(-1deg); }
   50% { transform: rotate(1deg); }
@@ -419,7 +464,7 @@ body {
 }
 
 .id-card-glow:hover {
-  box-shadow: 0 0 30px rgba(77, 142, 255, 0.3);
+  box-shadow: 0 0 40px rgba(77, 142, 255, 0.35), 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
 .lanyard-card__topbar {
@@ -470,12 +515,14 @@ body {
   border-radius: 1rem;
   padding: 32px;
   backdrop-filter: blur(4px);
-  transition: border-color 0.25s ease, transform 0.25s ease;
+  transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  /* 3D tilt perspective set by JS */
 }
 
 .skill-card:hover {
-  border-color: rgba(255, 255, 255, 0.25);
-  transform: translateY(-4px);
+  border-color: rgba(173, 198, 255, 0.3);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 40px -16px rgba(77, 142, 255, 0.3), 0 0 0 1px rgba(173, 198, 255, 0.08);
 }
 
 .skill-badge {
@@ -488,13 +535,14 @@ body {
   font-weight: 600;
   border: 1px solid rgba(255, 255, 255, 0.05);
   display: inline-block;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .skill-badge:hover {
-  transform: scale(1.06);
-  border-color: rgba(173, 198, 255, 0.4);
-  box-shadow: 0 0 14px rgba(77, 142, 255, 0.25);
+  transform: scale(1.08) translateY(-2px);
+  border-color: rgba(173, 198, 255, 0.5);
+  box-shadow: 0 0 18px rgba(77, 142, 255, 0.3);
+  background: rgba(173, 198, 255, 0.08);
 }
 
 .tag-badge {
@@ -507,22 +555,29 @@ body {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
-/* ---------- Project / design cards ---------- */
+.tag-badge:hover {
+  border-color: rgba(173, 198, 255, 0.3);
+  background: rgba(173, 198, 255, 0.06);
+}
+
+/* ---------- Project cards ---------- */
 
 .project-card {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1rem;
   overflow: hidden;
-  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+  will-change: transform;
 }
 
 .project-card:hover {
-  border-color: rgba(255, 255, 255, 0.25);
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px -20px rgba(77, 142, 255, 0.35);
+  border-color: rgba(173, 198, 255, 0.25);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 24px 48px -20px rgba(77, 142, 255, 0.4), 0 0 0 1px rgba(173, 198, 255, 0.08);
 }
 
 .project-card__media {
@@ -535,18 +590,42 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .project-card:hover .project-card__media img {
-  transform: scale(1.06);
+  transform: scale(1.07);
 }
+
+/* Subtle shimmer overlay on project card hover */
+.project-card__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(173, 198, 255, 0.06), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.project-card:hover .project-card__media::after {
+  opacity: 1;
+}
+
+/* ---------- Design cards ---------- */
 
 .design-card {
   position: relative;
   border-radius: 1rem;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: border-color 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+
+.design-card:hover {
+  border-color: rgba(173, 198, 255, 0.25);
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 40px -16px rgba(77, 142, 255, 0.35);
 }
 
 .design-card img {
@@ -554,24 +633,12 @@ body {
   height: 256px;
   object-fit: cover;
   opacity: 0.8;
-  transition: opacity 0.3s ease, transform 0.5s ease;
-}
-
-.poster-card {
-  max-width: 320px; /* Sesuaikan lebar kartu */
-  width: 100%;
-}
-
-.psoter
--card img {
-  width: 100%;
-  height: 420px; /* Bebas sesuaikan tinggi portrait */
-  object-fit: cover; /* Mencegah gambar terdistorsi/gepeng */
+  transition: opacity 0.35s ease, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .design-card:hover img {
   opacity: 1;
-  transform: scale(1.04);
+  transform: scale(1.05);
 }
 
 .design-card__overlay {
@@ -580,8 +647,46 @@ body {
   left: 0;
   width: 100%;
   padding: 24px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+  transition: padding-bottom 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+.design-card:hover .design-card__overlay {
+  padding-bottom: 30px;
+}
+
+/* ---------- Poster cards ---------- */
+
+.poster-card {
+  max-width: 320px;
+  width: 100%;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+  will-change: transform;
+}
+
+.poster-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(173, 198, 255, 0.12);
+}
+
+.poster-card img {
+  width: 100%;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.poster-card:hover img {
+  transform: scale(1.05);
+}
+
+.poster-card__overlay {
+  transition: padding-bottom 0.35s ease;
+}
+
+.poster-card:hover .poster-card__overlay {
+  padding-bottom: 20px;
+}
+
+/* ---------- Empty state ---------- */
 
 .empty-state {
   width: 100%;
@@ -608,6 +713,12 @@ body {
   border-radius: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(8px);
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.contact-form:focus-within {
+  border-color: rgba(173, 198, 255, 0.2);
+  box-shadow: 0 8px 32px -12px rgba(77, 142, 255, 0.15);
 }
 
 .form-input {
@@ -617,13 +728,19 @@ body {
   border-radius: 0.5rem;
   padding: 12px 16px;
   color: #d4e4fa;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.form-input:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(10, 10, 12, 0.8);
 }
 
 .form-input:focus {
   outline: none;
   border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2), 0 0 16px -4px rgba(77, 142, 255, 0.25);
+  background: rgba(10, 10, 12, 0.95);
 }
 
 .form-status {
@@ -662,5 +779,24 @@ body {
     opacity: 1;
     transform: none;
     animation: none !important;
+  }
+
+  /* Navbar visible immediately with no animation */
+  #navbar {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: none !important;
+  }
+
+  /* Disable 3D tilt on cards */
+  .project-card,
+  .skill-card,
+  .poster-card {
+    transition: none !important;
+  }
+
+  /* Disable particle canvas */
+  #particle-canvas {
+    display: none;
   }
 }

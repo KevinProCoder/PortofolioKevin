@@ -8,14 +8,27 @@
   "use strict";
 
   var prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
 
   /* ------------------------------------------------------------------
-     Navbar: solid background on scroll + smooth-scroll for anchor links
+     Navbar: entrance animation + solid background on scroll +
+     smooth-scroll for anchor links
      ------------------------------------------------------------------ */
   function initNavbar() {
     var navbar = document.getElementById("navbar");
     if (!navbar) return;
 
+    // Entrance: trigger slide-down + fade-in after a short delay so it
+    // feels intentional (not just a flash of content).
+    if (prefersReducedMotion) {
+      navbar.classList.add("navbar-loaded");
+    } else {
+      window.setTimeout(function () {
+        navbar.classList.add("navbar-loaded");
+      }, 80);
+    }
+
+    // Scrolled glass effect
     function onScroll() {
       if (window.scrollY > 24) {
         navbar.classList.add("scrolled");
@@ -128,7 +141,7 @@
   function initHeroParallax() {
     var imageWrap = document.getElementById("hero-image-wrap");
     var hero = document.getElementById("home");
-    if (!imageWrap || !hero || prefersReducedMotion) return;
+    if (!imageWrap || !hero || prefersReducedMotion || isTouchDevice) return;
 
     // Only enable on devices with a fine pointer (real mouse), so we
     // don't fight with touch scrolling on phones/tablets.
@@ -202,7 +215,7 @@
           obs.unobserve(el);
         });
       },
-      { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
+      { threshold: 0.12, rootMargin: "0px 0px -50px 0px" }
     );
 
     items.forEach(function (el) {
@@ -226,6 +239,199 @@
       );
       stageObserver.observe(lanyardStage);
     }
+  }
+
+  /* ------------------------------------------------------------------
+     Particle canvas: floating glowing dots themed as a developer/tech
+     background. Uses requestAnimationFrame and pauses when tab is
+     hidden to save CPU.
+     ------------------------------------------------------------------ */
+  function initParticles() {
+    var canvas = document.getElementById("particle-canvas");
+    if (!canvas || prefersReducedMotion) return;
+
+    var ctx = canvas.getContext("2d");
+    var particles = [];
+    var animFrame = null;
+    var isVisible = true;
+
+    // Adjust count for device capability
+    var PARTICLE_COUNT = isTouchDevice ? 20 : 45;
+    var COLORS = ["rgba(173, 198, 255,", "rgba(77, 142, 255,", "rgba(194, 212, 255,"];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function createParticle() {
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.8 + 0.4,          // 0.4 – 2.2 px
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        opacity: Math.random() * 0.25 + 0.08,        // 0.08 – 0.33
+        speedX: (Math.random() - 0.5) * 0.35,        // very slow drift
+        speedY: (Math.random() - 0.5) * 0.35,
+        pulseSpeed: Math.random() * 0.008 + 0.003,   // breathing speed
+        pulseOffset: Math.random() * Math.PI * 2,    // random phase
+        // Occasional soft connecting line — stored as reference index
+        connectTo: Math.random() > 0.75 ? Math.floor(Math.random() * PARTICLE_COUNT) : -1
+      };
+    }
+
+    function initParticleList() {
+      particles = [];
+      for (var i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push(createParticle());
+      }
+    }
+
+    function drawLine(a, b) {
+      var dx = a.x - b.x;
+      var dy = a.y - b.y;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist > 180) return; // Only draw lines for close neighbours
+      var lineOpacity = (1 - dist / 180) * 0.07;
+      ctx.beginPath();
+      ctx.strokeStyle = "rgba(173, 198, 255, " + lineOpacity + ")";
+      ctx.lineWidth = 0.5;
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+    }
+
+    var tick = 0;
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      tick += 1;
+
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+
+        // Slow drift
+        p.x += p.speedX;
+        p.y += p.speedY;
+
+        // Wrap around edges
+        if (p.x < -4) p.x = canvas.width + 4;
+        if (p.x > canvas.width + 4) p.x = -4;
+        if (p.y < -4) p.y = canvas.height + 4;
+        if (p.y > canvas.height + 4) p.y = -4;
+
+        // Pulse opacity
+        var pulse = Math.sin(tick * p.pulseSpeed + p.pulseOffset) * 0.1;
+        var currentOpacity = Math.max(0, Math.min(1, p.opacity + pulse));
+
+        // Draw particle
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color + currentOpacity + ")";
+        ctx.fill();
+
+        // Subtle soft glow on larger particles
+        if (p.radius > 1.4) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius * 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = p.color + (currentOpacity * 0.12) + ")";
+          ctx.fill();
+        }
+
+        // Soft connector lines
+        if (p.connectTo >= 0 && p.connectTo !== i && particles[p.connectTo]) {
+          drawLine(p, particles[p.connectTo]);
+        }
+      }
+
+      if (isVisible) {
+        animFrame = window.requestAnimationFrame(draw);
+      }
+    }
+
+    // Pause when tab is hidden to save resources
+    document.addEventListener("visibilitychange", function () {
+      isVisible = !document.hidden;
+      if (isVisible && !animFrame) {
+        animFrame = window.requestAnimationFrame(draw);
+      }
+    });
+
+    // Debounced resize
+    var resizeTimer;
+    window.addEventListener("resize", function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(function () {
+        resize();
+        initParticleList();
+      }, 200);
+    }, { passive: true });
+
+    resize();
+    initParticleList();
+    animFrame = window.requestAnimationFrame(draw);
+  }
+
+  /* ------------------------------------------------------------------
+     Card 3D tilt: subtle perspective tilt following the cursor.
+     Works on project cards, skill cards, and poster cards.
+     Disabled on touch devices automatically.
+     ------------------------------------------------------------------ */
+  function initCardTilt() {
+    if (prefersReducedMotion || isTouchDevice) return;
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+
+    var TILT_MAX = 3;     // degrees max rotation
+    var PERSPECTIVE = "600px";
+
+    var cards = document.querySelectorAll(".project-card, .skill-card, .poster-card");
+    cards.forEach(function (card) {
+      var targetRX = 0, targetRY = 0;
+      var currentRX = 0, currentRY = 0;
+      var raf = null;
+
+      function lerp(a, b, t) {
+        return a + (b - a) * t;
+      }
+
+      function animate() {
+        currentRX = lerp(currentRX, targetRX, 0.1);
+        currentRY = lerp(currentRY, targetRY, 0.1);
+
+        card.style.transform =
+          "perspective(" + PERSPECTIVE + ") " +
+          "rotateX(" + currentRX.toFixed(2) + "deg) " +
+          "rotateY(" + currentRY.toFixed(2) + "deg) " +
+          "translateZ(4px)";
+
+        // Keep animating until settled
+        if (
+          Math.abs(targetRX - currentRX) > 0.01 ||
+          Math.abs(targetRY - currentRY) > 0.01
+        ) {
+          raf = window.requestAnimationFrame(animate);
+        } else {
+          raf = null;
+        }
+      }
+
+      card.addEventListener("mousemove", function (e) {
+        var rect = card.getBoundingClientRect();
+        var relX = (e.clientX - rect.left) / rect.width - 0.5;   // -0.5 to 0.5
+        var relY = (e.clientY - rect.top) / rect.height - 0.5;
+
+        targetRY = relX * TILT_MAX * 2;
+        targetRX = -relY * TILT_MAX * 2;
+
+        if (!raf) raf = window.requestAnimationFrame(animate);
+      });
+
+      card.addEventListener("mouseleave", function () {
+        targetRX = 0;
+        targetRY = 0;
+        if (!raf) raf = window.requestAnimationFrame(animate);
+      });
+    });
   }
 
   /* ------------------------------------------------------------------
@@ -270,7 +476,7 @@
     var MAX_X = 70;
     var MAX_Y = 40;
     var MAX_ROT = 28;
-    var DRAG_DAMPING = 0.55; // pointer movement -> lanyard movement ratio
+    var DRAG_DAMPING = 0.55;
     var SPRING_STIFFNESS = 0.12;
     var SPRING_DAMPING = 0.78;
 
@@ -291,9 +497,6 @@
       }
     }
 
-    // Damped spring animation that eases (x, y, rot) back to (0, 0, 0)
-    // after the user lets go — this is what makes the card feel like it
-    // is really hanging from the strap instead of just snapping back.
     function runSpring() {
       velocity.x += -state.x * SPRING_STIFFNESS;
       velocity.y += -state.y * SPRING_STIFFNESS;
@@ -326,7 +529,6 @@
     }
 
     function onPointerDown(e) {
-      // Only respond to the primary button for mouse.
       if (e.pointerType === "mouse" && e.button !== 0) return;
 
       stopSpring();
@@ -359,8 +561,6 @@
       if (!dragging) return;
       dragging = false;
 
-      // Carry a little velocity into the spring so release feels alive
-      // rather than the card freezing mid-swing.
       var dx = e.clientX - pointerStart.x;
       velocity.rot = clamp(dx * 0.01, -6, 6);
 
@@ -378,8 +578,6 @@
     card.addEventListener("pointerup", onPointerUp);
     card.addEventListener("pointercancel", onPointerUp);
 
-    // Keyboard fallback so the card is reachable without a mouse/touch —
-    // arrow keys give it a little nudge and spring, Escape resets it.
     card.addEventListener("keydown", function (e) {
       var nudge = 18;
       if (e.key === "ArrowLeft") { state.rot = clamp(state.rot - nudge, -MAX_ROT, MAX_ROT); runSpring(); }
@@ -389,9 +587,7 @@
   }
 
   /* ------------------------------------------------------------------
-     Contact form: lightweight client-side handling. No backend is wired
-     up yet, so this just gives clear feedback — swap the TODO for a real
-     fetch() call once you have somewhere to send the message.
+     Contact form: lightweight client-side handling.
      ------------------------------------------------------------------ */
   function initContactForm() {
     var form = document.querySelector(".contact-form");
@@ -405,8 +601,6 @@
         return;
       }
 
-      // TODO: replace with a real submit (fetch to your backend or a
-      // form service like Formspree) once one is set up.
       status.textContent = "Thanks! Your message is ready to send — hook this form up to your backend or a form service to deliver it.";
       form.reset();
     });
@@ -422,6 +616,8 @@
     initHeroIntro();
     initHeroParallax();
     initScrollAnimations();
+    initParticles();
+    initCardTilt();
     initLanyard();
     initContactForm();
   });
